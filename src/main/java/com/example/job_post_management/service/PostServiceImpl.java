@@ -19,7 +19,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getPost(Long id) {
-        return postRepository.findById(id).get();
+        if(postRepository.existsById(id)){
+            return postRepository.findById(id).get();
+        }else{
+            throw new PostNotFoundException(id);
+        }
     }
 
     @Override
@@ -29,7 +33,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePost(Long id) {
-        postRepository.deleteById(id);
+        if(postRepository.existsById(id)){
+            postRepository.deleteById(id);
+        }else{
+            throw new PostNotFoundException(id);
+        }
     }
 
     @Override
@@ -39,11 +47,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post updatePost(Long id, Post post) {
-        Optional<Post> postObj = postRepository.findById(id);
-        if(postObj.isPresent()){
-            // Post oldPost = postObj.get();
+        if(postRepository.existsById(id)){
             post.setId(id);
-           return postRepository.save(post);   
+            return postRepository.save(post);
         }else{
             throw new PostNotFoundException(id);
         }
