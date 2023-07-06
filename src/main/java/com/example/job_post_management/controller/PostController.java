@@ -27,27 +27,32 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}")
     public ResponseEntity<Post>getPost(@PathVariable Long id){
         return new ResponseEntity<Post>(postService.getPost(id), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping
     public ResponseEntity<Post>savePost(@RequestBody Post post){
         return new ResponseEntity<Post>(postService.savePost(post), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("{id}")
     public ResponseEntity<Post>updatePost(@PathVariable Long id,@RequestBody Post post){
         return new ResponseEntity<Post>(postService.updatePost(id,post), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus>deletePost(@PathVariable Long id){
         postService.deletePost(id);
         return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
     public ResponseEntity<List<Post>>getPosts(){
         return new ResponseEntity<List<Post>>(postService.getAllPost(),HttpStatus.OK);
